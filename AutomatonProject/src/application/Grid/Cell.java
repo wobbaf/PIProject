@@ -12,6 +12,13 @@ public class Cell {
 	
 	public static HashMap neighborhood = new HashMap();
 	
+	public static Point getPosition(){
+		return coords;
+	}
+	
+	public static int getState(){
+		return state;
+	}
 	public static Cell instance(){
 		return instance;
 	}
