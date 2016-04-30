@@ -16,7 +16,7 @@ import application.Grid.Grid;
 public class Rules implements java.io.Serializable{
 	public static Rules instance;
 	
-	public static List<Rule> rules = new ArrayList();
+	public static List<Rule> rules = new ArrayList<Rule>();
 	
 	public static Rules instance(){
 		return instance;
@@ -59,6 +59,7 @@ public class Rules implements java.io.Serializable{
 	      }
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void loadFromFile (){
 		try
 	      {
