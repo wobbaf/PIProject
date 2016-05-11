@@ -14,11 +14,13 @@ import application.Grid.Cell;
 import application.Grid.Grid;
 
 public class Rules implements java.io.Serializable{
-	public static Rules instance;
+	private static Rules instance;
 	
-	public static List<Rule> rules = new ArrayList<Rule>();
-	
+	public static List<HashMap> rules = new ArrayList<HashMap>();
+	public static List<Point> r = new ArrayList<Point>();
 	public static Rules instance(){
+		if(instance == null)
+			instance = new Rules();
 		return instance;
 	}
 	
@@ -26,7 +28,7 @@ public class Rules implements java.io.Serializable{
 		Rules.instance = this;
 	}
 	
-	public static void checkRule (Rule rule){
+	public static void checkRule (HashMap rule){
 		rules.forEach((temp)->{
 			if (rule == temp){
 				return;
@@ -35,24 +37,32 @@ public class Rules implements java.io.Serializable{
 		rules.add(rule);
 	}
 	
-	public static void addRule (Rule rule){
+	public static void addRule (HashMap rule){
 		checkRule(rule);
 	}
 	
-	public static void removeRule (Rule rule){
+	public static void removeRule (HashMap rule){
 		rules.remove(rule);
 	}
 	
 	public static void saveToFile (){
+		String usr = System.getProperty("user.name");
 		try
 	      {
 	         FileOutputStream fileOut =
-	         new FileOutputStream("/tmp/rules.ser");
+	         new FileOutputStream("/Users/maciej/Documents/rules.bubu");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	         out.writeObject(rules);
+	         out.writeObject(instance().rules);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Serialized data is saved in /tmp/rules.ser");
+	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/rules.bubu");
+	         FileOutputStream fileOut1 =
+	    	         new FileOutputStream("/Users/maciej/Documents/textrules.bubu");
+	    	         ObjectOutputStream out1 = new ObjectOutputStream(fileOut1);
+	    	         out1.writeObject(instance().r);
+	    	         out1.close();
+	    	         fileOut1.close();
+	    	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/textrules.bubu");
 	      }catch(IOException i)
 	      {
 	          i.printStackTrace();
@@ -61,13 +71,19 @@ public class Rules implements java.io.Serializable{
 	
 	@SuppressWarnings("unchecked")
 	public static void loadFromFile (){
+		String usr = System.getProperty("user.name");
 		try
 	      {
-	         FileInputStream fileIn = new FileInputStream("/tmp/rules.ser");
+	         FileInputStream fileIn = new FileInputStream("/Users/maciej/Documents/rules.bubu");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         rules = (List<Rule>) in.readObject();
+	         instance().rules = (List<HashMap>) in.readObject();
 	         in.close();
 	         fileIn.close();
+	         FileInputStream fileIn1 = new FileInputStream("/Users/maciej/Documents/textrules.bubu");
+	         ObjectInputStream in1 = new ObjectInputStream(fileIn1);
+	         instance().r = (List<Point>) in1.readObject();
+	         in1.close();
+	         fileIn1.close();
 	      }catch(IOException i)
 	      {
 	         i.printStackTrace();

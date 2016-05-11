@@ -8,8 +8,19 @@ import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Shape;
+
 import javax.swing.JTextField;
+
+import common.Panel2;
+import application.Grid.Cell;
+import application.Grid.Grid;
+import application.Settings.Settings.Size;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class Settings {
@@ -17,6 +28,7 @@ public class Settings {
 	public JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -46,7 +58,7 @@ public class Settings {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 188);
+		frame.setBounds(100, 100, 314, 188);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -64,14 +76,13 @@ public class Settings {
 		frame.getContentPane().add(lblSetWidth, gbc_lblSetWidth);
 		
 		textField = new JTextField();
-		textField.setText("500");
+		textField.setText(String.valueOf(application.Settings.Settings.Size.width));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 2;
 		gbc_textField.gridy = 3;
 		frame.getContentPane().add(textField, gbc_textField);
-		textField.setColumns(10);
 		
 		JLabel lblSetHeight = new JLabel("Set height:");
 		GridBagConstraints gbc_lblSetHeight = new GridBagConstraints();
@@ -82,14 +93,75 @@ public class Settings {
 		frame.getContentPane().add(lblSetHeight, gbc_lblSetHeight);
 		
 		textField_1 = new JTextField();
-		textField_1.setText("500");
+		textField_1.setText(String.valueOf(application.Settings.Settings.Size.height));
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 2;
 		gbc_textField_1.gridy = 4;
 		frame.getContentPane().add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		
+		JLabel lblCellSize = new JLabel("Cell size:");
+		GridBagConstraints gbc_lblCellSize = new GridBagConstraints();
+		gbc_lblCellSize.anchor = GridBagConstraints.EAST;
+		gbc_lblCellSize.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCellSize.gridx = 1;
+		gbc_lblCellSize.gridy = 5;
+		frame.getContentPane().add(lblCellSize, gbc_lblCellSize);
+		
+		textField_2 = new JTextField();
+		textField_2.setText(String.valueOf(application.Settings.Settings.Size.cellSize));
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.gridx = 2;
+		gbc_textField_2.gridy = 5;
+		frame.getContentPane().add(textField_2, gbc_textField_2);
+		
+		JButton btnApply = new JButton("Apply");
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(textField.getText()+"\n");
+				application.Settings.Settings.Size.height = Integer.parseInt(textField_1.getText());
+				application.Settings.Settings.Size.width = Integer.parseInt(textField.getText());
+				application.Settings.Settings.Size.cellSize = Integer.parseInt(textField_2.getText());
+				Main.panel.sized();
+				Main.panel.re();
+				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize, application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
+				Grid.instance().map.clear();
+				Grid.instance().initGrid(application.Settings.Settings.Size.height,application.Settings.Settings.Size.width);
+				Main.frmCellularAutomaton.revalidate();
+				//Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*8, application.Settings.Settings.Size.width*8);
+				frame.dispose();
+			}
+		});
+		GridBagConstraints gbc_btnApply = new GridBagConstraints();
+		gbc_btnApply.insets = new Insets(0, 0, 5, 5);
+		gbc_btnApply.gridx = 1;
+		gbc_btnApply.gridy = 6;
+		frame.getContentPane().add(btnApply, gbc_btnApply);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				application.Settings.Settings.Size.height = 50;
+				application.Settings.Settings.Size.width = 50;
+				application.Settings.Settings.Size.cellSize = 8;
+				textField_1.setText(String.valueOf(application.Settings.Settings.Size.height));
+				textField.setText(String.valueOf(application.Settings.Settings.Size.width));
+				textField_2.setText(String.valueOf(application.Settings.Settings.Size.cellSize));
+				Main.panel.sized();
+				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize, application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
+				Grid.instance().map.clear();
+				Grid.instance().initGrid(application.Settings.Settings.Size.height,application.Settings.Settings.Size.width);
+				Main.frmCellularAutomaton.revalidate();
+			}
+		});
+		GridBagConstraints gbc_btnReset = new GridBagConstraints();
+		gbc_btnReset.insets = new Insets(0, 0, 5, 5);
+		gbc_btnReset.gridx = 2;
+		gbc_btnReset.gridy = 6;
+		frame.getContentPane().add(btnReset, gbc_btnReset);
 		
 		JButton btnRules = new JButton("Rules");
 		btnRules.addActionListener(new ActionListener() {
@@ -98,25 +170,11 @@ public class Settings {
 				rules.frame.setVisible(true);
 			}
 		});
-		
-		JButton btnReset = new JButton("Reset");
-		GridBagConstraints gbc_btnReset = new GridBagConstraints();
-		gbc_btnReset.insets = new Insets(0, 0, 5, 0);
-		gbc_btnReset.gridx = 10;
-		gbc_btnReset.gridy = 5;
-		frame.getContentPane().add(btnReset, gbc_btnReset);
 		GridBagConstraints gbc_btnRules = new GridBagConstraints();
 		gbc_btnRules.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRules.gridx = 1;
+		gbc_btnRules.gridx = 3;
 		gbc_btnRules.gridy = 6;
 		frame.getContentPane().add(btnRules, gbc_btnRules);
-		
-		JButton btnApply = new JButton("Apply");
-		GridBagConstraints gbc_btnApply = new GridBagConstraints();
-		gbc_btnApply.insets = new Insets(0, 0, 5, 0);
-		gbc_btnApply.gridx = 10;
-		gbc_btnApply.gridy = 6;
-		frame.getContentPane().add(btnApply, gbc_btnApply);
 	}
 
 }
