@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -48,7 +49,7 @@ public class Main {
 	static JTextField txtEg;
 	static boolean flag = false;
 	public static Panel2 panel;
-	LoopThread aLoopThread = new LoopThread();
+	static LoopThread aLoopThread = new LoopThread();
 
 	/**
 	 * Launch the application.
@@ -98,10 +99,12 @@ public class Main {
 				set.frame.setVisible(true);
 				try {
 					aLoopThread.pauseThread();
+					//aLoopThread.destroy();
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 			}
 		});
 		mnMenu.add(mntmSettings);
@@ -197,6 +200,12 @@ public class Main {
 					}
 					Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize,
 							application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
+					application.Grid.Grid.instance().map2 = application.Grid.Grid.instance().map1;
+					application.Grid.Grid.instance().map1 = application.Grid.Grid.instance().map;
+					if(application.Grid.Grid.instance().map2 == application.Grid.Grid.instance().map){
+						JOptionPane.showMessageDialog(null, "Oscillation!");
+						 running = false;
+					}
 				}
 	    	}
 	    }

@@ -17,6 +17,7 @@ public class Rules implements java.io.Serializable{
 	private static Rules instance;
 	
 	public static List<HashMap> rules = new ArrayList<HashMap>();
+	public static List<Integer> mid = new ArrayList<Integer>();
 	public static List<Point> r = new ArrayList<Point>();
 	public static Rules instance(){
 		if(instance == null)
@@ -63,6 +64,13 @@ public class Rules implements java.io.Serializable{
 	    	         out1.close();
 	    	         fileOut1.close();
 	    	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/textrules.bubu");
+	    	         FileOutputStream fileOut2 =
+	    	    	         new FileOutputStream("/Users/maciej/Documents/rulesst.bubu");
+	    	    	         ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
+	    	    	         out2.writeObject(instance().mid);
+	    	    	         out2.close();
+	    	    	         fileOut2.close();
+	    	    	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/textrules.bubu");
 	      }catch(IOException i)
 	      {
 	          i.printStackTrace();
@@ -79,6 +87,11 @@ public class Rules implements java.io.Serializable{
 	         instance().rules = (List<HashMap>) in.readObject();
 	         in.close();
 	         fileIn.close();
+	         FileInputStream fileIn2 = new FileInputStream("/Users/maciej/Documents/rulesst.bubu");
+	         ObjectInputStream in2 = new ObjectInputStream(fileIn2);
+	         instance().mid = (List<Integer>) in2.readObject();
+	         in2.close();
+	         fileIn2.close();
 	         FileInputStream fileIn1 = new FileInputStream("/Users/maciej/Documents/textrules.bubu");
 	         ObjectInputStream in1 = new ObjectInputStream(fileIn1);
 	         instance().r = (List<Point>) in1.readObject();

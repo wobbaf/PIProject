@@ -30,6 +30,7 @@ public class Rule extends JPanel {
 	public static HashMap<Point, Integer> hmap = new HashMap<Point, Integer>();
 	public static List<Shape> grid;
     public static List<Shape> fill;
+    public static List<Shape> fill2;
     public static List<Cell> cells = new ArrayList<>();
     application.Settings.Settings set = new application.Settings.Settings();
     public Size s = application.Settings.Settings.Size.initSize();
@@ -41,23 +42,34 @@ public class Rule extends JPanel {
 		}
         grid = new ArrayList<>(5);
         fill = new ArrayList<>(5);
+        fill2 = new ArrayList<>(5);
         
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 for (Shape shape : grid) {
                     if (shape.contains(e.getPoint())) {
-                        if (fill.contains(shape)) {
-                            fill.remove(shape);
-                            hmap.put(new Point((shape.getBounds().y)/16,(shape.getBounds().x)/16),0);
-                            
-                        } else {
-                            fill.add(shape);
-                            hmap.put(new Point((shape.getBounds().y)/16,(shape.getBounds().x)/16),2);
-                        }
-                    }
+                    if (fill2.contains(shape) || fill.contains(shape)){
+                		{
+                			if (fill.contains(shape)) {
+                			fill.remove(shape);
+                            fill2.add(shape);
+                            hmap.put(new Point((shape.getBounds().y)/16,(shape.getBounds().x)/16),1);
+                			}
+                			else{
+                				fill2.remove(shape);
+                				hmap.put(new Point((shape.getBounds().y)/16,(shape.getBounds().x)/16),0);
+                                //fill.add(shape);
+                			}
+                			
+                		}
+                     }
+                	else{
+                		fill.add(shape);
+                    	hmap.put(new Point((shape.getBounds().y)/16,(shape.getBounds().x)/16),2);
+                	}
                 }
-                
+                }
                 repaint();
             }
         });
@@ -97,7 +109,10 @@ public class Rule extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.RED);
         for (Shape cell : fill) {
-        	
+            g2d.fill(cell);
+        }
+        g2d.setColor(Color.DARK_GRAY);
+        for (Shape cell : fill2) {
             g2d.fill(cell);
         }
         g2d.setColor(Color.BLACK);

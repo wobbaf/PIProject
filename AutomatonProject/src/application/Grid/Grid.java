@@ -15,6 +15,8 @@ import common.Panel2;
 public class Grid {
 	private static Grid instance;
 	public static HashMap<Point, Integer> map ;
+	public static HashMap<Point, Integer> map1 = null;
+	public static HashMap<Point, Integer> map2 = null;
 	public static Grid instance(){
 		if(instance == null)
 			instance = new Grid();
@@ -46,8 +48,11 @@ public class Grid {
 				}
 				Cell.instance();
 				if(i<application.Settings.Rules.rules.size()){
-					if(Cell.getNeighborhood(key).equals(application.Settings.Rules.rules.get(i))){
-						tempMap.put(new Point(key.x,key.y), 2);
+					//System.out.println(" nb "+Cell.getNeighborhood(key));
+					//System.out.println("ru "+ru(application.Settings.Rules.rules.get(i)));
+					if(Cell.getNeighborhood(key).equals(ru(application.Settings.Rules.rules.get(i)))){
+						tempMap.put(new Point(key.x,key.y), application.Settings.Rules.mid.get(i));
+						//System.out.println(application.Settings.Rules.mid.get(i));
 					}
 				}
 			}
@@ -55,6 +60,18 @@ public class Grid {
 		for (Point key : tempMap.keySet()) {
 			instance().map.put(key, tempMap.get(key));
 		}
+	}
+	public static HashMap ru (HashMap hm){
+		HashMap x = new HashMap();
+		for (int i = 0; i < 5; i++){
+			for(int j = 0; j < 5; j++){
+				if (i != 2 && j != 2){
+					x.put(new Point(i,j), hm.get(new Point(i,j)));
+				}
+			}
+		}
+		return x;
+		
 	}
 	public static void updateCell(Cell cell){
 		Main main = new Main();

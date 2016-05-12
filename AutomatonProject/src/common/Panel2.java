@@ -97,12 +97,18 @@ public class Panel2 extends JPanel {
     public void re(){
     	//System.out.println(Grid.map);
     	for (Shape shape : grid) {
-    				if(Grid.instance().map.containsKey(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize)) && Grid.instance().map.get(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize)) == 2){
+    				if(Grid.instance().map.containsKey(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize)) 
+    						&& Grid.instance().map.get(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize))
+    						== 2){
     					//System.out.println(Grid.map.get(new Point(shape.getBounds().x,shape.getBounds().y)));
-    		        	fill.add(shape);}
-    				if(Grid.instance().map.containsKey(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize)) && Grid.instance().map.get(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize)) == 1){
+    		        	fill.add(shape);
+    		        	}
+    				if(Grid.instance().map.containsKey(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize))
+    						&& Grid.instance().map.get(new Point(shape.getBounds().x/application.Settings.Settings.Size.cellSize,shape.getBounds().y/application.Settings.Settings.Size.cellSize))
+    						== 1){
     					//System.out.println(Grid.map.get(new Point(shape.getBounds().x,shape.getBounds().y)));
-    		        	fill2.add(shape);}
+    		        	fill2.add(shape);
+    		        	}
         }
     	repaint();
     }

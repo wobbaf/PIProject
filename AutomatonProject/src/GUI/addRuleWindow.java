@@ -70,23 +70,16 @@ public class addRuleWindow {
 		btnAddRule.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
-				//application.Settings.Rule r = new application.Settings.Rule();
-				//HashMap<Point,Integer> m = new HashMap<Point,Integer>();
-				//m = panel.hmap;
+				application.Settings.Rules.instance().mid.add(panel.hmap.get(new Point(2,2)));
+				System.out.println(panel.hmap.get(new Point(2,2)));
 				application.Settings.Rules.instance().rules.add(new HashMap<Point, Integer>(panel.hmap));
+
 				Rules.listModel.removeAllElements();
 				for (int i = 0; i < application.Settings.Rules.instance().rules.size(); i++){
 					Rules.listModel.addElement(application.Settings.Rules.instance().rules.get(i));
-				//Rules.listModel.addElement(application.Settings.Rules.instance().rules.get(i));
+					System.out.println(application.Settings.Rules.instance().rules.get(i));
 				}
-				//System.out.println(map);
-				//application.Settings.Rules.rules.add(r);
-				//System.out.println(r.toString());
-				//Rules gui = new Rules();
-//				JTextField text = new JTextField();
-//				text.setText(r.toString());
-//				gui.model.addElement(text.getText());
-//				gui.list = new JList(gui.model);
+
 				frame.dispose();
 			}
 		});

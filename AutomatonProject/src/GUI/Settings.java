@@ -131,7 +131,9 @@ public class Settings {
 				Grid.instance().map.clear();
 				Grid.instance().initGrid(application.Settings.Settings.Size.height,application.Settings.Settings.Size.width);
 				Main.frmCellularAutomaton.revalidate();
-				//Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*8, application.Settings.Settings.Size.width*8);
+				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*8, application.Settings.Settings.Size.width*8);
+//				Main.aLoopThread = new LoopThread();
+//				Main.aLoopThread.start();
 				frame.dispose();
 			}
 		});
