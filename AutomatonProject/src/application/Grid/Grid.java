@@ -24,7 +24,7 @@ public class Grid {
 	public static HashMap<Point, Integer> map ;
 	public static HashMap<Point, Integer> map1 = new HashMap<Point, Integer>();
 	public static HashMap<Point, Integer> map2 = new HashMap<Point, Integer>();
-	public static int step = 4;
+	public static int step = 1;
 	public static Grid instance(){
 		if(instance == null)
 			instance = new Grid();
@@ -54,8 +54,8 @@ public class Grid {
 	    //    Point key = (Point) pair.getKey();
 			for (int i = 0; i < Math.max(application.Settings.Rules.rules.size(),application.Settings.Rules.r.size()); i++) {		
 				if(i<application.Settings.Rules.r.size()){
-					if(Collections.frequency(new ArrayList<>(Cell.getNeighborhood(key).values()),2) == application.Settings.Rules.r.get(i).x){
-						tempMap.put(new Point(key.x,key.y), application.Settings.Rules.r.get(i).y);
+					if(Collections.frequency(new ArrayList<>(Cell.getNeighborhood(key).values()),application.Settings.Rules.r.get(i).getS()) == application.Settings.Rules.r.get(i).getP().x){
+						tempMap.put(new Point(key.x,key.y), application.Settings.Rules.r.get(i).getP().y);
 					}
 				}
 				Cell.instance();

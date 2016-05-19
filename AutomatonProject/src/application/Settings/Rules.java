@@ -18,7 +18,7 @@ public class Rules implements java.io.Serializable{
 	
 	public static List<HashMap> rules = new ArrayList<HashMap>();
 	public static List<Integer> mid = new ArrayList<Integer>();
-	public static List<Point> r = new ArrayList<Point>();
+	public static List<Foo> r = new ArrayList<Foo>();
 	public static Rules instance(){
 		if(instance == null)
 			instance = new Rules();
@@ -94,7 +94,7 @@ public class Rules implements java.io.Serializable{
 	         fileIn2.close();
 	         FileInputStream fileIn1 = new FileInputStream("textrules.bubu");
 	         ObjectInputStream in1 = new ObjectInputStream(fileIn1);
-	         instance().r = (List<Point>) in1.readObject();
+	         instance().r = (List<Foo>) in1.readObject();
 	         in1.close();
 	         fileIn1.close();
 	      }catch(IOException i)
@@ -108,4 +108,21 @@ public class Rules implements java.io.Serializable{
 	         return;
 	      }
 	}
+	public class Foo {
+	    public Foo(Point point, int i) {
+	    	this.p = point;
+	    	this.s = i;
+			// TODO Auto-generated constructor stub
+		}
+		private Point p;
+	    private int s; 
+	    public Point getP(){
+	    	return this.p;
+	    }
+	    public int getS(){
+	    	return this.s;
+	    }
+	    // ctors, getters, etc.
+	}
 }
+

@@ -169,9 +169,9 @@ public class Rules {
 				}
 				Rules.listModel1.removeAllElements();
 				for (int i = 0; i < application.Settings.Rules.instance().r.size(); i++){
-					Rules.listModel1.addElement("If "+ application.Settings.Rules.instance().r.get(i).x
-							+ " cells alive then "
-							+ addTextRuleWindow.isdead(application.Settings.Rules.instance().r.get(i).y));
+					Rules.listModel1.addElement("If "+ application.Settings.Rules.instance().r.get(i).getP().x
+							+ " cells"+ addTextRuleWindow.isdead(application.Settings.Rules.instance().r.get(i).getS()) +"then "
+							+ addTextRuleWindow.isdead(application.Settings.Rules.instance().r.get(i).getP().y));
 				//Rules.listModel.addElement(application.Settings.Rules.instance().rules.get(i));
 				}
 			}
@@ -183,6 +183,11 @@ public class Rules {
 		frame.getContentPane().add(btnLoadFromFile, gbc_btnLoadFromFile);
 		
 		JButton btnApply = new JButton("Apply");
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		btnApply.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_btnApply = new GridBagConstraints();
 		gbc_btnApply.insets = new Insets(0, 0, 0, 5);

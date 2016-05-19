@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 
 import application.Grid.Cell;
 import application.Settings.Rule;
+import application.Settings.Rules.Foo;
 import javafx.scene.control.ComboBox;
 
 import java.awt.GridBagConstraints;
@@ -75,14 +76,21 @@ public class addTextRuleWindow {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblCellsAliveIn = new JLabel("cells alive in neighborhood then ");
-		lblCellsAliveIn.setBounds(130, 36, 206, 16);
+		JLabel lblCellsAliveIn = new JLabel("cells ");
+		lblCellsAliveIn.setBounds(130, 36, 33, 16);
 		frame.getContentPane().add(lblCellsAliveIn);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Dead", "Alive"}));
 		comboBox.setBounds(147, 74, 94, 27);
 		frame.getContentPane().add(comboBox);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Dead", "Alive"}));
+		comboBox_1.setSelectedIndex(1);
+		comboBox_1.setBounds(168, 32, 81, 27);
+		frame.getContentPane().add(comboBox_1);
+		
 		
 		JButton btnAddRule = new JButton("Add rule");
 		btnAddRule.addActionListener(new ActionListener() {
@@ -91,16 +99,20 @@ public class addTextRuleWindow {
 				//Point p = ;
 
 				for (int i = 0; i < application.Settings.Rules.instance().r.size(); i++){
-				if(Integer.parseInt(textField.getText()) == application.Settings.Rules.instance().r.get(i).x)
+				if(Integer.parseInt(textField.getText()) == application.Settings.Rules.instance().r.get(i).getP().x
+						&& comboBox_1.getSelectedIndex()+1 == application.Settings.Rules.instance().r.get(i).getS())
 					application.Settings.Rules.instance().r.remove(i);
 				}
-				application.Settings.Rules.instance().r.add(new Point(Integer.parseInt(textField.getText()),comboBox.getSelectedIndex()+1));
+				application.Settings.Rules.instance().r.add(
+						application.Settings.Rules.instance().new Foo(new Point(Integer.parseInt(textField.getText()),
+								comboBox.getSelectedIndex()+1),
+								comboBox_1.getSelectedIndex()+1));
 				System.out.println(application.Settings.Rules.instance().r);
 				Rules.listModel1.removeAllElements();
 				for (int i = 0; i < application.Settings.Rules.instance().r.size(); i++){
-					Rules.listModel1.addElement("If "+ application.Settings.Rules.instance().r.get(i).x
-							+ " cells alive then "
-							+ isdead(application.Settings.Rules.instance().r.get(i).y));
+					Rules.listModel1.addElement("If "+ application.Settings.Rules.instance().r.get(i).getP().x
+							+ " cells "+isdead(application.Settings.Rules.instance().r.get(i).getS())+" then "
+							+ isdead(application.Settings.Rules.instance().r.get(i).getP().y));
 				//Rules.listModel.addElement(application.Settings.Rules.instance().rules.get(i));
 				}
 				//System.out.println(map);
@@ -116,6 +128,11 @@ public class addTextRuleWindow {
 		});
 		btnAddRule.setBounds(147, 175, 117, 29);
 		frame.getContentPane().add(btnAddRule);
+		
+
+		JLabel lblNewLabel = new JLabel(" in neighborhood then ");
+		lblNewLabel.setBounds(249, 36, 144, 16);
+		frame.getContentPane().add(lblNewLabel);
 		
 	}
 	public static String isdead(int i){
