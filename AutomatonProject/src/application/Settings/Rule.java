@@ -21,14 +21,22 @@ public class Rule {
 		Rule.instance = this;
 	}
 	
-//	public static boolean checkRule (Cell cell){
-//		HashMap neighborhood = cell.neighborhood;
-//		if (neighborhood != rule){
-//			return false;
-//		}
-//		return true;
-//		
-//	}
+	public static void checkRule (HashMap rule){
+		HashMap neighborhood = new HashMap(rule);
+		neighborhood.remove(new Point(2,2));
+		for(int i = 0; i < Rules.instance().rules.size(); i++){
+			HashMap r = new HashMap(Rules.instance().rules.get(i));
+			r.remove(new Point(2,2));
+			if (neighborhood.equals(r)){
+				System.out.println(r);
+				System.out.println(neighborhood);
+				Rules.instance().rules.remove(i);
+				Rules.instance().mid.remove(i);
+				//return i;
+			}
+		}
+		//return null;
+	}
 //	
 //	public static HashMap getRuleNeighborhood(){
 //		HashMap map = new HashMap();

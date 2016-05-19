@@ -94,6 +94,21 @@ public class Panel2 extends JPanel {
         }
         repaint();
     }
+    public void sized2(){
+    	int colWidth = application.Settings.Settings.Size.cellSize;
+        int rowHeight = application.Settings.Settings.Size.cellSize;
+        width = application.Settings.Settings.Size.width;
+        height = application.Settings.Settings.Size.height;
+        //grid.clear();
+        //fill.clear();
+        //fill2.clear();
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                grid.add(new Rectangle(colWidth * col, rowHeight * row, colWidth, rowHeight));
+            }
+        }
+        repaint();
+    }
     public void re(){
     	//System.out.println(Grid.map);
     	for (Shape shape : grid) {
@@ -143,8 +158,10 @@ public class Panel2 extends JPanel {
         for (Shape cell : fill2) {
             g2d.fill(cell);
         }
-        g2d.setColor(Color.BLACK);
+        
+        g2d.setColor(Color.LIGHT_GRAY);
         for (Shape cell : grid) {
+        	if(application.Settings.Settings.Size.cellSize >= 2)
             g2d.draw(cell);
         }
     }

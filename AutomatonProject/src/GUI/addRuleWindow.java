@@ -70,14 +70,23 @@ public class addRuleWindow {
 		btnAddRule.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
+				//System.out.println(panel.hmap);
+//				for (int i = 0; i < application.Settings.Rules.instance().rules.size(); i++){
+//					System.out.println(application.Settings.Rules.instance().rules.get(i));
+//					if(panel.hmap.equals(application.Settings.Rules.instance().rules.get(i)))
+//						application.Settings.Rules.instance().rules.remove(i);
+//						//application.Settings.Rules.instance().mid.remove(i);
+//					}
+				Rule.instance().checkRule(panel.hmap);
 				application.Settings.Rules.instance().mid.add(panel.hmap.get(new Point(2,2)));
-				System.out.println(panel.hmap.get(new Point(2,2)));
+				//System.out.println(panel.hmap.get(new Point(2,2)));
 				application.Settings.Rules.instance().rules.add(new HashMap<Point, Integer>(panel.hmap));
+				//System.out.println(Rule.instance().checkRule(new HashMap<Point, Integer>(panel.hmap)));
 
 				Rules.listModel.removeAllElements();
 				for (int i = 0; i < application.Settings.Rules.instance().rules.size(); i++){
 					Rules.listModel.addElement(application.Settings.Rules.instance().rules.get(i));
-					System.out.println(application.Settings.Rules.instance().rules.get(i));
+					//System.out.println(application.Settings.Rules.instance().rules.get(i));
 				}
 
 				frame.dispose();

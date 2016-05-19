@@ -52,13 +52,14 @@ public class Cell {
 			int x=0;
 			for (int j = p.y - 2; j <= p.y+2; j++){
 				if(j >=0 && i >=0){
-					if(i != p.x && j != p.y){
+					//if(i != p.x && j != p.y){
 						ne.put(new Point(x,y), Grid.instance().map.get(new Point(i,j)));
-					}
+					//}
+//					else{
+//						ne.put(new Point(x,y), Grid.instance().map.get(new Point(i,j)));
+//					}
 				}
-				else{
-					ne.put(new Point(x,y), 0);
-				}
+				
 				x++;
 			}
 			y++;

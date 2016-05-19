@@ -20,6 +20,7 @@ import application.Settings.Settings.Size;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -58,7 +59,7 @@ public class Settings {
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 314, 188);
+		frame.setBounds(100, 100, 364, 188);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -118,31 +119,6 @@ public class Settings {
 		gbc_textField_2.gridy = 5;
 		frame.getContentPane().add(textField_2, gbc_textField_2);
 		
-		JButton btnApply = new JButton("Apply");
-		btnApply.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(textField.getText()+"\n");
-				application.Settings.Settings.Size.height = Integer.parseInt(textField_1.getText());
-				application.Settings.Settings.Size.width = Integer.parseInt(textField.getText());
-				application.Settings.Settings.Size.cellSize = Integer.parseInt(textField_2.getText());
-				Main.panel.sized();
-				Main.panel.re();
-				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize, application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
-				Grid.instance().map.clear();
-				Grid.instance().initGrid(application.Settings.Settings.Size.height,application.Settings.Settings.Size.width);
-				Main.frmCellularAutomaton.revalidate();
-				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*8, application.Settings.Settings.Size.width*8);
-//				Main.aLoopThread = new LoopThread();
-//				Main.aLoopThread.start();
-				frame.dispose();
-			}
-		});
-		GridBagConstraints gbc_btnApply = new GridBagConstraints();
-		gbc_btnApply.insets = new Insets(0, 0, 5, 5);
-		gbc_btnApply.gridx = 1;
-		gbc_btnApply.gridy = 6;
-		frame.getContentPane().add(btnApply, gbc_btnApply);
-		
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,11 +135,63 @@ public class Settings {
 				Main.frmCellularAutomaton.revalidate();
 			}
 		});
+		
+		JButton btnSaveGrid = new JButton("Save grid");
+		btnSaveGrid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Grid.instance().saveToFile();
+			}
+		});
+		GridBagConstraints gbc_btnSaveGrid = new GridBagConstraints();
+		gbc_btnSaveGrid.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSaveGrid.gridx = 1;
+		gbc_btnSaveGrid.gridy = 6;
+		frame.getContentPane().add(btnSaveGrid, gbc_btnSaveGrid);
 		GridBagConstraints gbc_btnReset = new GridBagConstraints();
 		gbc_btnReset.insets = new Insets(0, 0, 5, 5);
 		gbc_btnReset.gridx = 2;
 		gbc_btnReset.gridy = 6;
 		frame.getContentPane().add(btnReset, gbc_btnReset);
+		
+		JButton btnApply = new JButton("Apply");
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(textField.getText()+"\n");
+				application.Settings.Settings.Size.height = Integer.parseInt(textField_1.getText());
+				application.Settings.Settings.Size.width = Integer.parseInt(textField.getText());
+				application.Settings.Settings.Size.cellSize = Integer.parseInt(textField_2.getText());
+				HashMap<Point,Integer> temp =  new HashMap<Point,Integer>(Grid.instance().map);
+				Grid.instance().map.clear();
+				Grid.instance().initGrid(application.Settings.Settings.Size.height,application.Settings.Settings.Size.width);
+				for (Point key : temp.keySet()) {
+					Grid.instance().map.put(key, temp.get(key));
+				}
+				Main.panel.sized();
+				Main.panel.re();
+				Main.frmCellularAutomaton.revalidate();
+				Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize, application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
+
+				frame.dispose();
+			}
+		});
+		
+		JButton btnLoadGrid = new JButton("Load grid");
+		btnLoadGrid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Grid.instance().loadFromFile();
+				Main.panel.re();
+			}
+		});
+		GridBagConstraints gbc_btnLoadGrid = new GridBagConstraints();
+		gbc_btnLoadGrid.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLoadGrid.gridx = 3;
+		gbc_btnLoadGrid.gridy = 6;
+		frame.getContentPane().add(btnLoadGrid, gbc_btnLoadGrid);
+		GridBagConstraints gbc_btnApply = new GridBagConstraints();
+		gbc_btnApply.insets = new Insets(0, 0, 5, 5);
+		gbc_btnApply.gridx = 1;
+		gbc_btnApply.gridy = 7;
+		frame.getContentPane().add(btnApply, gbc_btnApply);
 		
 		JButton btnRules = new JButton("Rules");
 		btnRules.addActionListener(new ActionListener() {
@@ -175,7 +203,7 @@ public class Settings {
 		GridBagConstraints gbc_btnRules = new GridBagConstraints();
 		gbc_btnRules.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRules.gridx = 3;
-		gbc_btnRules.gridy = 6;
+		gbc_btnRules.gridy = 7;
 		frame.getContentPane().add(btnRules, gbc_btnRules);
 	}
 

@@ -51,26 +51,26 @@ public class Rules implements java.io.Serializable{
 		try
 	      {
 	         FileOutputStream fileOut =
-	         new FileOutputStream("/Users/maciej/Documents/rules.bubu");
+	         new FileOutputStream("rules.bubu");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         out.writeObject(instance().rules);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/rules.bubu");
+	         System.out.printf("Serialized data is saved in rules.bubu");
 	         FileOutputStream fileOut1 =
-	    	         new FileOutputStream("/Users/maciej/Documents/textrules.bubu");
-	    	         ObjectOutputStream out1 = new ObjectOutputStream(fileOut1);
-	    	         out1.writeObject(instance().r);
-	    	         out1.close();
-	    	         fileOut1.close();
-	    	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/textrules.bubu");
-	    	         FileOutputStream fileOut2 =
-	    	    	         new FileOutputStream("/Users/maciej/Documents/rulesst.bubu");
-	    	    	         ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
-	    	    	         out2.writeObject(instance().mid);
-	    	    	         out2.close();
-	    	    	         fileOut2.close();
-	    	    	         System.out.printf("Serialized data is saved in /Users/maciej/Documents/textrules.bubu");
+	         new FileOutputStream("textrules.bubu");
+	         ObjectOutputStream out1 = new ObjectOutputStream(fileOut1);
+	         out1.writeObject(instance().r);
+	         out1.close();
+	         fileOut1.close();
+	         System.out.printf("Serialized data is saved in textrules.bubu");
+	         FileOutputStream fileOut2 =
+	         new FileOutputStream("rulesst.bubu");
+	         ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
+	         out2.writeObject(instance().mid);
+	         out2.close();
+	         fileOut2.close();
+	         System.out.printf("Serialized data is saved in rulesst.bubu");
 	      }catch(IOException i)
 	      {
 	          i.printStackTrace();
@@ -82,17 +82,17 @@ public class Rules implements java.io.Serializable{
 		String usr = System.getProperty("user.name");
 		try
 	      {
-	         FileInputStream fileIn = new FileInputStream("/Users/maciej/Documents/rules.bubu");
+	         FileInputStream fileIn = new FileInputStream("rules.bubu");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         instance().rules = (List<HashMap>) in.readObject();
 	         in.close();
 	         fileIn.close();
-	         FileInputStream fileIn2 = new FileInputStream("/Users/maciej/Documents/rulesst.bubu");
+	         FileInputStream fileIn2 = new FileInputStream("rulesst.bubu");
 	         ObjectInputStream in2 = new ObjectInputStream(fileIn2);
 	         instance().mid = (List<Integer>) in2.readObject();
 	         in2.close();
 	         fileIn2.close();
-	         FileInputStream fileIn1 = new FileInputStream("/Users/maciej/Documents/textrules.bubu");
+	         FileInputStream fileIn1 = new FileInputStream("textrules.bubu");
 	         ObjectInputStream in1 = new ObjectInputStream(fileIn1);
 	         instance().r = (List<Point>) in1.readObject();
 	         in1.close();

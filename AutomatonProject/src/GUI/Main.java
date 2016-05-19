@@ -182,10 +182,31 @@ public class Main {
 		txtEg.setColumns(10);
 		
 		JButton btnApplyStep = new JButton("Apply step");
+		btnApplyStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Grid.instance().step = Integer.parseInt(Main.txtEg.getText());
+				aLoopThread = new LoopThread();
+				aLoopThread.start();
+			}
+		});
 		GridBagConstraints gbc_btnApplyStep = new GridBagConstraints();
 		gbc_btnApplyStep.gridx = 5;
 		gbc_btnApplyStep.gridy = 15;
 		frmCellularAutomaton.getContentPane().add(btnApplyStep, gbc_btnApplyStep);
+		
+		frmCellularAutomaton.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        if (JOptionPane.showConfirmDialog(frmCellularAutomaton, 
+		            "Do you want to save changes?", "Exit", 
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+		        	Grid.instance().saveToFile();
+		        	application.Settings.Rules.saveToFile();
+		            System.exit(0);
+		        }
+		    }
+		});
 	}
     }
 	class LoopThread extends Thread {
@@ -194,15 +215,15 @@ public class Main {
 	    	while(true){
 	    		while(!running) {}
 				while (running){
-					for (int i = 0; i < Integer.parseInt(Main.txtEg.getText()); i++){
+					for (int i = 0; i < Grid.instance().step; i++){
 						Grid.updateGrid(application.Settings.Settings.Size.height, application.Settings.Settings.Size.width);
-						Main.panel.re();
 					}
+					Main.panel.re();
 					Main.panel.paintImmediately(0, 0, application.Settings.Settings.Size.height*application.Settings.Settings.Size.cellSize,
 							application.Settings.Settings.Size.width*application.Settings.Settings.Size.cellSize);
-					application.Grid.Grid.instance().map2 = application.Grid.Grid.instance().map1;
-					application.Grid.Grid.instance().map1 = application.Grid.Grid.instance().map;
-					if(application.Grid.Grid.instance().map2 == application.Grid.Grid.instance().map){
+					application.Grid.Grid.instance().map2 = new HashMap(application.Grid.Grid.instance().map1);
+					application.Grid.Grid.instance().map1 = new HashMap(application.Grid.Grid.instance().map);
+					if(application.Grid.Grid.instance().map2.equals(application.Grid.Grid.instance().map)){
 						JOptionPane.showMessageDialog(null, "Oscillation!");
 						 running = false;
 					}
